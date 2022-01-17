@@ -16,7 +16,6 @@ async function applyNpmToken(npmToken) {
     }
     const file = await fse.readFile(npmrc, "utf-8");
     const result = `${file}\n${npmToken}\n`;
-    console.log("result", result);
     await fse.writeFile(npmrc, result, "utf-8");
 }
 exports.applyNpmToken = applyNpmToken;
@@ -74,7 +73,7 @@ exports.executePublishRequest = executePublishRequest;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createGithubTag = void 0;
-const node_fetch_with_proxy_1 = __nccwpck_require__(3733);
+const fetch = __nccwpck_require__(3733);
 function formatTag(version) {
     return `v${version.major}.${version.minor}.${version.patch}${version.patchSuffix}`;
 }
@@ -96,7 +95,7 @@ async function createGithubTag(version, token, repo, sha) {
         },
         body: JSON.stringify(body)
     };
-    const result = await (0, node_fetch_with_proxy_1.default)(url, parameters);
+    const result = await fetch(url, parameters);
     console.log("Creating tag result: ", result.status, result.statusText);
 }
 exports.createGithubTag = createGithubTag;
