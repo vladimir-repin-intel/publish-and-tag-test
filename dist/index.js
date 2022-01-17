@@ -15,7 +15,9 @@ async function applyNpmToken(npmToken) {
         await fse.writeFile(npmrc, `${npmToken}\n`, "utf-8");
     }
     const file = await fse.readFile(npmrc, "utf-8");
-    await fse.writeFile(npmrc, `${file}\n${npmToken}\n`, "utf-8");
+    const result = `${file}\n${npmToken}\n`;
+    console.log("result", result);
+    await fse.writeFile(npmrc, result, "utf-8");
 }
 exports.applyNpmToken = applyNpmToken;
 //# sourceMappingURL=applyNpmToken.js.map
