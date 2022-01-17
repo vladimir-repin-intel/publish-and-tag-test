@@ -1,4 +1,7 @@
-name: 'intel/publish-and-tag@v1'
+name: 'intel/publish-and-tag'
+branding:
+  icon: activity
+  color: blue
 description: 'action to publish npm package and set the same git tag to git commit'
 inputs:
   npmToken:
