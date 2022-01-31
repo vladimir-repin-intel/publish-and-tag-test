@@ -133,10 +133,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.publishAndTag = void 0;
 const githubTag_1 = __nccwpck_require__(9530);
 const publishNpmVersion_1 = __nccwpck_require__(3699);
+const printVersion_1 = __nccwpck_require__(7405);
 async function publishAndTag(npmToken, githubToken, repo, sha, dryRun) {
     const version = await (0, publishNpmVersion_1.publishNpmVersion)(npmToken, dryRun);
     if (dryRun) {
-        return;
+        return console.log(`Dry run mode, version ${(0, printVersion_1.printVersion)(version)}`);
     }
     await (0, githubTag_1.createGithubTag)(version, githubToken, repo, sha);
 }
@@ -50473,9 +50474,13 @@ const npmToken = core.getInput("npmToken");
 const githubToken = core.getInput("githubToken");
 const repo = core.getInput("repo");
 const sha = core.getInput("sha");
-const dryRun = (core.getInput("dryRun") ?? "").trim() === "true";
+const dryRun = (core.getInput("dryRun") ?? "").trim() === "true"
+    || isEmpty(npmToken) || isEmpty(githubToken) || isEmpty(repo) || isEmpty(sha);
 (0, publishAndTag_1.publishAndTag)(npmToken, githubToken, repo, sha, dryRun)
     .catch(err => core.setFailed(err.message));
+function isEmpty(key) {
+    return key == null || key === "";
+}
 //# sourceMappingURL=index.js.map
 })();
 
